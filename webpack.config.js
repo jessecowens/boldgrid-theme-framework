@@ -2,20 +2,20 @@ const webpack = require( 'webpack' );
 const path = require( 'path' );
 const src = path.resolve( __dirname, 'src' );
 const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
+const BrowserSyncPlugin = require( 'browser-sync-webpack-plugin' );
 
 module.exports = {
 	mode: process.env.NODE_ENV || 'production',
-	devtool: 'development' === process.env.NODE_ENV ? 'source-map' : false,
+
 	context: src,
 
 	entry: {
-		'assets/js/customizer/customizer': './assets/js/customizer/customizer.js',
-		'assets/js/customizer/base-controls': './assets/js/customizer/base-controls.js',
-		'assets/js/front-end': './assets/js/front-end.js'
+		customizer: './assets/js/customizer/customizer.js',
+		'base-controls': './assets/js/customizer/base-controls.js'
 	},
 
 	output: {
-		filename: './[name].min.js',
+		filename: './assets/js/customizer/[name].min.js',
 		path: path.resolve( __dirname, 'boldgrid-theme-framework' )
 	},
 
@@ -32,6 +32,16 @@ module.exports = {
 		overlay: {
 			errors: true,
 			warnings: true
+		},
+		proxy: {
+			'*': {
+				target: 'http://localhost/wordpress',
+				secure: false
+			},
+			'/': {
+				target: 'http://localhost/wordpress',
+				secure: false
+			}
 		}
 	},
 
@@ -95,8 +105,17 @@ module.exports = {
 	},
 	plugins: [
 		new MiniCssExtractPlugin( {
-			filename: './assets/css/base-controls-bundle.min.css'
+			filename: './assets/css/[name]-bundle.min.css'
 		} ),
+
+		new BrowserSyncPlugin( {
+                proxy: 'http://localhost/wordpress',
+                files: [
+                    '**/*.php'
+                ],
+                reloadDelay: 0
+            }
+        ),
 
 		new webpack.ProvidePlugin( {
 			$: 'jquery',
