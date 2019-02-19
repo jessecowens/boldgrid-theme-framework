@@ -72,7 +72,7 @@ return array(
 		'panel' => 'bgtfw_blog_panel',
 		'notice' => [
 			'dismissible' => false,
-			'message' => esc_html__( 'Upgrade to Crio Pro to gain access to dozens of new customization options for your single posts!Upgrade Crio to get additional customization options for your posts!', 'crio-premium' ),
+			'message' => esc_html__( 'Upgrade Crio to get additional customization options for your posts!', 'crio-premium' ),
 			'type' => 'bgtfw-features',
 			'templateId' => 'bgtfw-notification',
 			'featureCount' => 8,
